@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.FirstPerson
@@ -254,6 +255,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+        }
+
+        public void OnTriggerEnter(Collider collider)
+        {
+            if (collider.gameObject.CompareTag("Coin"))
+            {
+                GameManager.coins += 1;
+                Destroy(collider.gameObject);
+            }
+
+            if (collider.gameObject.CompareTag("Water"))
+            {
+                SceneManager.LoadScene("LoseScene");
+            }
         }
     }
 }
